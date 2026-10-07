@@ -10,7 +10,7 @@ ui = app.userInterface
 
 # TODO *** Specify the command identity information. ***
 CMD_ID = f'{config.COMPANY_NAME}_{config.ADDIN_NAME}_makeSpacer'
-CMD_NAME = 'FRC_COTS Make Spacer'
+CMD_NAME = 'BCHS 2386 Make Spacer'
 CMD_Description = 'Make a COTS part into a Dynamic Spacer'
 
 # Specify that the command will be promoted to the panel.

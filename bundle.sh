@@ -10,7 +10,7 @@ echo "Extracted version is $version"
 
 "C:/Program Files/7-Zip/7z.exe" a $build_path/$program_basename.zip LICENSE \
     *.md *.png *.html *.py *.manifest -ir!lib/* -ir!commands/* -ir!resources/* \
-    -ir!spacers/* -xr!__pycache__
+    -ir!spacers/* -ir!docs/* -xr!__pycache__
 
 echo
 echo

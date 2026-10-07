@@ -1,174 +1,63 @@
-# FRC COTS Fusion 360 Add-In
+# BCHS FRC Team 2386 COTS Library
 
-## ⚙️ Smarter FRC Robot CAD Workflows
+A BCHS robotics edition of the FRC COTS add-in for Autodesk Fusion. Browse commercial off-the-shelf robot parts, insert them into an assembly, and create rigid joints without leaving the design workspace.
 
-FRC COTS is a Fusion 360 add-in that gives robotics teams a clean, modern interface for browsing and inserting **COTS parts** directly into designs.
-No more digging through Data Panels or re-creating parts someone already modeled. Just click → insert → joint → done.
 
-Designed by **FRC Team 5000 — The Hammerheads — Logan de Laar**
+## Features
 
----
-
-## What It Does
-
-- Browses all `.f3d` parts inside a cloud project named **FRC_COTS**
-- Supports **folder navigation**, **search**, and **favorites**
-- Shows **preview icons** if available
-- Inserts parts into the active design with **one click**
-- Automatically creates **rigid joints** aligned to:
-  - Circular edges
-  - Cylindrical faces
-  - Planar faces (center keypoint)
-  - Joint origins
-- Works on **macOS and Windows**
-- Beautiful UI with **Dark / Light theme toggle**
-
----
-
-## 📁 How to Organize Your COTS Library
-
-Create a project in Fusion 360 called:
-
-```
-FRC_COTS
-```
-
-Inside that project, add your `.f3d` CAD files in whatever folder structure you want:
-
-```
-FRC_COTS/
-  Motors/
-    Kraken_X60.f3d
-    NEO.f3d
-  Bearings/
-    6804.f3d
-  Gearboxes/
-    MaxPlanetary.f3d
-```
-
-These folders become categories in the add-in.
-
-(Optional) Preview icons can be added here inside the add-in folder:
-
-```
-FRC-COTS/icons/<PartName>.png
-```
-
----
+- Browse folders in a Fusion cloud project named `FRC_COTS`.
+- Search part names, keep favorites, and view downloaded thumbnails.
+- Insert `.f3d` parts and align rigid joints to supported faces, edges, or joint origins.
+- Insert dynamic spacers with a chosen length or an extent to another object.
+- Switch between light and dark themes.
+- Supports Windows and macOS through Fusion's Python add-in environment.
 
 ## Installation
 
-### Recommended Method: GitHub Release ZIP
+1. Install and sign in to a school-approved Autodesk Fusion installation.
+2. Obtain a copy of this edition. Extract or copy the complete project to a permanent folder named **`FRC-COTS`**. A repository download may use a different folder name; rename the installation copy.
+3. Keep `FRC-COTS.py`, `FRC-COTS.manifest`, `config.py`, `database_thread.py`, `frc_cots_palette.html`, `team_2386_badge.png`, `commands/`, `lib/`, and `resources/` together. `spacers/` contains optional example designs.
+4. In Fusion, open **Utilities → Add-Ins → Scripts and Add-Ins**. On the **Add-Ins** tab, use **+** to select the `FRC-COTS` folder, then select the add-in and click **Run**. Fusion's labels can vary by release.
+5. Leave **Run on Startup** off during initial testing; it is off in the manifest.
+6. In the current Fusion hub, create or obtain access to a cloud project named **`FRC_COTS`**, with `.f3d` parts in its folders. If there are duplicate project names, the first matching accessible project is used.
+7. Open a test design. In the Design workspace's Insert panel, select **BCHS 2386 COTS Library**.
 
-Download the latest `FRC-COTS.zip` from the Releases section on GitHub and extract it.
-After extracting, rename the top-level folder to **FRC-COTS** (exact spelling, including hyphen).
+The add-in uses Python and `adsk` modules provided by Fusion. No separate Python installation, pip packages, database server, API key, or background service is required.
 
-Place the folder here depending on OS:
+The folder-selection method avoids differences in default add-in locations between Fusion installations. See Autodesk's [installation guidance](https://www.autodesk.com/support/technical/article/caas/sfdcarticles/sfdcarticles/How-to-install-an-ADD-IN-and-Script-in-Fusion-360.html) and [add-in manager guidance](https://help.autodesk.com/cloudhelp/ENU/Fusion-Model/files/SLD-MANAGE-SCRIPTS-ADD-INS.htm).
 
-#### Windows
+## Library and usage
+
+An example cloud library:
+
+```text
+FRC_COTS/
+  Motors/
+    Kraken_X60.f3d
+  Bearings/
+    6804.f3d
+  Spacers/
+    Hex_Spacer.f3d
 ```
-%AppData%/Autodesk/Autodesk Fusion 360/API/AddIns/FRC-COTS
-```
 
-#### macOS
-```
-~/Library/Application Support/Autodesk/Autodesk Fusion 360/API/AddIns/FRC-COTS
-```
+Select a supported face, edge, or joint origin, then choose a part. Review placement, flip, offsets, and other command options before accepting. Regular parts default to unlinked copies (`DEFAULT_TO_LINKED_PARTS = False`); linking is available in the part command. Spacers are inserted as unlinked components so their geometry can be resized. Save the design through Fusion after checking it.
 
-Ensure these files exist in that folder:
+For a dynamic spacer, create a short spacer or shaft with planar end faces and a joint origin at one end, pointing outward. Use **BCHS 2386 Make Spacer** in Utilities to set the spacer attribute. Hide construction origins and save the library design. The bundled `spacers/` files are examples to upload manually if needed.
 
-```
-FRC-COTS/
-  FRC-COTS.py
-  FRC-COTS.manifest
-  frc_cots_palette.html
-  icons/
-```
+## Local data and student use
 
----
+The default cache is **`~/FRC-COTS_db`** (`%USERPROFILE%\FRC-COTS_db` on Windows):
 
-## Enabling in Fusion 360
+- `parts_db.json`: project name/ID, part names/IDs, folder paths, versions, timestamps, and local thumbnail paths.
+- `FRC_COTS_favorites.json`: part IDs and favorite flags.
+- `icons/*.png`: Fusion part thumbnails.
 
-1. Launch Fusion 360
-2. Go to **UTILITIES → Add-Ins → Scripts and Add-Ins**
-3. Select the **Add-Ins** tab
-4. Locate **FRC-COTS**
-5. Click **Run**
-6. (Optional) Enable **Run on Startup**
+The palette stores its theme in Fusion's embedded browser local storage under `frcCotsTheme`. Cache files are ordinary, unencrypted JSON and PNG files. Stopping or uninstalling the add-in does not remove them. A cache older than 14 days triggers an index rebuild and thumbnail deletion; this is not a comprehensive retention policy.
 
-A new button will appear:
+Read the [school IT deployment and support guide](docs/INSTALLATION_AND_STUDENT_SAFETY.md) before classroom deployment. It explains installation concerns, managed-device deployment, troubleshooting, actual access, network use, student-data safeguards, pilot checks, support ownership, and rollback. An editable Word copy is in the same folder.
 
-> **Design Workspace → Insert Panel → FRC COTS Library**
+## Credits and license
 
----
+BCHS FRC Team 2386 edition of FRC COTS. Original project: Logan de Laar, FRC Team 5000 — The Hammerheads, Hingham High School. Distributed under the [MIT license](LICENSE); Autodesk utility notices are preserved in `lib/fusionAddInUtils/`.
 
-## Usage
-
-1. In the canvas, select circular edges / cylindrical faces / planar faces where a part should attach
-2. Click a part in the COTS Library UI
-3. The add-in:
-   - Inserts a **reference occurrence**
-   - **Ungrounds** the component if needed
-   - Adds a **rigid joint** so position can be adjusted later
-
-Favorites and theme settings persist across sessions.
-
----
-
-## Joint Origins
-
-1. If a part has a joint origin defined in it (the first one found) then it is inserted using the joint origin.  It points the joint origin positive z-axis toward the mating part.
-2. If no joint origin exists then it is inserted with the coordinate origin as the center and the positive z-axis toward the mating part.
-
----
-
-## Dynamic Spacers
-
-1. Spacer and Shaft parts can be defined as 'dynamic spacers' so their length can be customized during insertion.
-2. Some parts that are already setup as dynamic spacers can be found in the `spacers` directory of the Add-In files.
-3. To create a dynamic spacer you do the following:
-    - Make a part that is a short section of the spacer or shaft.  For shaft I used 2" lengths and for spacers I used 1/4" lengths.  It doesn't matter what length.  I chose those so the thumbnails looked good.
-    - Each end of the part should be a planar face that is capable of being "Press/Pulled".
-    - Create a joint origin at one end of the part with the z-direction of the joint origin facing outward.
-    - Run the `Make Spacer` command found under the `Utilities` Panel.  Check the box to make this part a dynamic spacer.  This sets an attribute on the part file that is hidden but allows it to be dectected as a dynamic spacer. Unchecking the box removes the attribute.
-    - Hide the joint origin and the coordinate origin if it is showing and save the design.
-    - It should now be usable as a dynamic spacer.  
-    - Just insert it from the FRC_COTS palette and it should bring up a different dialog to manipulate it.
-
----
-
-## Tested With
-
-- Autodesk Fusion 360 (latest public release)
-- macOS Sonoma
-
-Works in:
-- Root assembly insertions
-- Normal CAD workflows
-
----
-
-## Roadmap
-
-Planned improvements:
-
-- Automatic preview icon generation
-- Multi-insert (one part to multiple targets)
-- Configurable joint types
-- Make configurable files work
-- Insert custom length spacers (round and hex)
-
----
-
-## Author
-
-**Logan de Laar**  
-**FRC Team 5000 — The Hammerheads**  
-Hingham High School
-
-
----
-
-## License
-
-MIT — free for all FRC teams 
+This edition has received source inspection and static checks. Fusion runtime behavior and compatibility must be verified on the school's Windows/macOS installations before rollout.
