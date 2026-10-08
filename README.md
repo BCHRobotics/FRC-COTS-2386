@@ -62,4 +62,4 @@ Read the [school IT deployment and support guide](INSTALLATION_AND_STUDENT_SAFET
 
 BCHS FRC Team 2386 edition of FRC COTS. Original project: Logan de Laar, FRC Team 5000 — The Hammerheads, Hingham High School. Distributed under the [MIT license](LICENSE); Autodesk utility notices are preserved in `lib/fusionAddInUtils/`.
 
-This edition has received source inspection and static checks. Fusion runtime behavior and compatibility must be verified on the school's Windows/macOS installations before rollout.
+This edition has received source inspection and automated regression checks. Assembly support and linked insertion were tested and verified by the team. School IT should complete acceptance testing on its managed Windows/macOS installations before rollout.

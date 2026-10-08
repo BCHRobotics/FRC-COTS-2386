@@ -1,6 +1,6 @@
 # BCHS FRC Team 2386 COTS Library School IT Deployment and Support Guide
 
-BCHS robotics • Version 1.3.0-2386.2 • October 8, 2026
+BCHS robotics • Version 1.3.0-2386.3 • October 8, 2026
 
 ## Purpose and assessment
 
