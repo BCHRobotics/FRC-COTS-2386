@@ -20,7 +20,7 @@ A BCHS robotics edition of the FRC COTS add-in for Autodesk Fusion. Browse comme
 4. In Fusion, open **Utilities → Add-Ins → Scripts and Add-Ins**. On the **Add-Ins** tab, use **+** to select the `FRC-COTS` folder, then select the add-in and click **Run**. Fusion's labels can vary by release.
 5. Leave **Run on Startup** off during initial testing; it is off in the manifest.
 6. In the current Fusion hub, create or obtain access to a cloud project named **`FRC_COTS`**, with `.f3d` parts in its folders. If there are duplicate project names, the first matching accessible project is used.
-7. Open a test design. In the Design workspace's Insert panel, select **FRC COTS Library**.
+7. Open an **Assembly** design (recommended for robot assemblies). In its Assembly tab's Insert panel, select **FRC COTS Library**. The library also remains available in the Hybrid Design workspace's Insert panel.
 
 The add-in uses Python and `adsk` modules provided by Fusion. No separate Python installation, pip packages, database server, API key, or background service is required.
 
@@ -40,7 +40,9 @@ FRC_COTS/
     Hex_Spacer.f3d
 ```
 
-Select a supported face, edge, or joint origin, then choose a part. Review placement, flip, offsets, and other command options before accepting. Regular parts default to unlinked copies (`DEFAULT_TO_LINKED_PARTS = False`); linking is available in the part command. Spacers are inserted as unlinked components so their geometry can be resized. Save the design through Fusion after checking it.
+Select a supported face, edge, or joint origin, then choose a part. Review placement, flip, offsets, and other command options before accepting. Regular parts default to external references (`DEFAULT_TO_LINKED_PARTS = True`). In Assembly designs, **Link Part** stays checked because Assembly requires external components. In Hybrid designs, you can explicitly uncheck it to insert an independent copy. The checkbox starts checked for each insertion; its state is not saved.
+
+Dynamic spacers in Assembly designs insert as linked parts at their saved length. For a custom length, prepare and save a separate Part design, add it to the library, then insert that linked part. The existing dynamic spacer length/extent dialog remains available in Hybrid designs and creates an unlinked copy. The add-in does not change a design to Hybrid automatically. Part designs cannot contain inserted components. Save the design through Fusion after checking it.
 
 For a dynamic spacer, create a short spacer or shaft with planar end faces and a joint origin at one end, pointing outward. Use **FRC_COTS Make Spacer** in Utilities to set the spacer attribute. Hide construction origins and save the library design. The bundled `spacers/` files are examples to upload manually if needed.
 

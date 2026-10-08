@@ -15,7 +15,10 @@ PARTS_DB_FOLDER = os.path.expanduser('~')       # Use the users home folder (e.g
 PARTS_DB_PATH = os.path.join(PARTS_DB_FOLDER, 'FRC-COTS_db')
 
 # Do we default to linking inserted parts?
-DEFAULT_TO_LINKED_PARTS = False
+DEFAULT_TO_LINKED_PARTS = True
+
+# Fusion uses a separate Insert panel for Assembly designs (January 2026 onward).
+LIBRARY_PANEL_IDS = ('InsertPanel', 'InsertAssemblePanel')
 
 
 # # Gets the name of the add-in from the name of the folder the py file is in.

@@ -12,6 +12,7 @@ from .commands.insertSpacer import entry as insertSpacer
 from .commands.makeSpacer import entry as setJoint
 
 from .lib import fusionAddInUtils as futil
+from .lib import design_utils
 
 
 # Keep a global reference to event handlers so they are not garbage collected.
@@ -31,6 +32,15 @@ ui = app.userInterface
 
 # Resource location for command icons, here we assume a sub folder in this directory named "resources".
 ICON_FOLDER = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'resources', '')
+
+
+def _library_panels():
+    workspace = ui.workspaces.itemById('FusionSolidEnvironment')
+    if workspace:
+        for panel_id in config.LIBRARY_PANEL_IDS:
+            panel = workspace.toolbarPanels.itemById(panel_id)
+            if panel:
+                yield panel
 
 
 def _ensure_file_paths_exist():
@@ -243,6 +253,12 @@ class FRCHTMLHandler(adsk.core.HTMLEventHandler):
 
             # HTML tells us to insert the selected part at current canvas selection
             elif action == 'insertPart':
+                design = adsk.fusion.Design.cast(app.activeProduct)
+                if not design or design_utils.is_part_design(design):
+                    ui.messageBox('Open an Assembly or Hybrid design to insert library parts. '
+                                  'Part designs cannot contain other components.')
+                    return
+
                 try:
                     payload = json.loads(data) if data else {}
                     idx = int(payload.get('index', -1))
@@ -257,9 +273,11 @@ class FRCHTMLHandler(adsk.core.HTMLEventHandler):
                 path, label, data_file_id, icon_name = cots_files[idx]
 
                 dataFile = database_thread.get_data_file( path, data_file_id )
-                isSpacer = setJoint.is_dataFile_spacer(dataFile)
+                # Assembly inserts every library item as an external reference.
+                isSpacer = (not design_utils.is_assembly_design(design)
+                            and setJoint.is_dataFile_spacer(dataFile))
 
-                if isSpacer:
+                if design_utils.uses_dynamic_spacer_command(design, isSpacer):
                     # This is a spacer
                     insertCmd = ui.commandDefinitions.itemById(config.INSERT_SPACER_CMD_ID)
                     insertSpacer.g_dataFile = dataFile
@@ -385,11 +403,8 @@ def run(context):
         cmd_def.commandCreated.add(on_created)
         handlers.append(on_created)
 
-        # Put the button on the Insert panel in the Design workspace
-        solid_ws = ui.workspaces.itemById('FusionSolidEnvironment')
-        panels = solid_ws.toolbarPanels
-        insert_panel = panels.itemById('InsertPanel')
-        if insert_panel:
+        # Register in both Hybrid and Assembly layouts, where available.
+        for insert_panel in _library_panels():
             control = insert_panel.controls.itemById(cmd_id)
             if not control:
                 control = insert_panel.controls.addCommand(cmd_def, '')
@@ -423,11 +438,8 @@ def stop(context):
             g_dbThread.stop()
             g_dbThread.join()
 
-        # Remove the toolbar button
-        solid_ws = ui.workspaces.itemById('FusionSolidEnvironment')
-        panels = solid_ws.toolbarPanels
-        insert_panel = panels.itemById('InsertPanel')
-        if insert_panel:
+        # Remove the button from both toolbar layouts.
+        for insert_panel in _library_panels():
             control = insert_panel.controls.itemById(cmd_id)
             if control:
                 control.deleteMe()
@@ -448,4 +460,4 @@ def stop(context):
                 pal.deleteMe()
 
     except:
-        ui.messageBox('Add-in stop failed:\n{}'.format(traceback.format_exc())) 
+        ui.messageBox('Add-in stop failed:\n{}'.format(traceback.format_exc()))

@@ -2,6 +2,7 @@ import adsk.core
 import adsk.fusion
 import os
 from ...lib import fusionAddInUtils as futil
+from ...lib import design_utils
 from ... import config
 app = adsk.core.Application.get()
 ui = app.userInterface
@@ -67,6 +68,7 @@ def command_created(args: adsk.core.CommandCreatedEventArgs):
 
     # https://help.autodesk.com/view/fusion360/ENU/?contextId=CommandInputs
     inputs = args.command.commandInputs
+    design = adsk.fusion.Design.cast(app.activeProduct)
 
     # TODO Define the dialog for your command by adding different inputs to the command.
 
@@ -96,7 +98,16 @@ def command_created(args: adsk.core.CommandCreatedEventArgs):
     # angleInp.isEnabled = False
 
     linkInp = inputs.addBoolValueInput( 'link_part', 'Link Part', True)
-    linkInp.value = config.DEFAULT_TO_LINKED_PARTS
+    assembly_design = design_utils.is_assembly_design(design)
+    linkInp.value = assembly_design or config.DEFAULT_TO_LINKED_PARTS
+    linkInp.isEnabled = not assembly_design
+    linkInp.tooltip = 'Reference the source file so source updates can be retrieved in Fusion.'
+    if assembly_design:
+        info = inputs.addTextBoxCommandInput(
+            'assembly_info', '',
+            'Assembly designs use linked parts. Dynamic spacers insert at their saved length; '
+            'prepare a separate Part design for a custom length.', 3, True)
+        info.isFullWidth = True
 
     inputs.addBoolValueInput( 'force_flip', 'Flip', True, os.path.join(ICON_FOLDER, 'Flip'))
 
@@ -108,7 +119,6 @@ def command_created(args: adsk.core.CommandCreatedEventArgs):
     futil.add_handler(args.command.destroy, command_destroy, local_handlers=local_handlers)
 
     global g_active_occ
-    design: adsk.fusion.Design = adsk.fusion.Design.cast(app.activeProduct)
     g_active_occ = design.activeOccurrence
 
     design.activateRootComponent()
@@ -147,6 +157,9 @@ def command_preview(args: adsk.core.CommandEventArgs):
 
     design: adsk.fusion.Design = adsk.fusion.Design.cast(app.activeProduct)
 
+    # Enforce the Assembly restriction even if a dialog value is changed externally.
+    link_part = link_part or design_utils.is_assembly_design(design)
+
     if g_active_occ:
         active_comp = g_active_occ.component
     else:
@@ -163,8 +176,16 @@ def command_preview(args: adsk.core.CommandEventArgs):
             # into the root component.  So we have to move it if a sub component
             # is the active component.
             part_occ = root_occs.addByInsert( g_dataFile, transform, True )
+            if not part_occ:
+                ui.messageBox('Fusion could not insert the linked part. Check source access, '
+                              'save the destination design, and check whether Fusion permits '
+                              'references between these projects.')
+                return
             if g_active_occ:
                 part_occ = part_occ.moveToComponent( g_active_occ )
+                if not part_occ:
+                    ui.messageBox('Fusion could not move the linked part into the active component.')
+                    return
 
         else:
             # Do not link component

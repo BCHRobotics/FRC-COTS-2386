@@ -2,6 +2,7 @@ import adsk.core
 import adsk.fusion
 import os
 from ...lib import fusionAddInUtils as futil
+from ...lib import design_utils
 from ... import config
 from ..insertPart.entry import joint_part, find_normal_centroid
 
@@ -187,6 +188,12 @@ def command_preselect(args: adsk.core.SelectionEventArgs):
 def command_preview(args: adsk.core.CommandEventArgs):
     global g_dataFile
     global g_active_occ
+
+    design = adsk.fusion.Design.cast(app.activeProduct)
+    if design_utils.is_assembly_design(design):
+        ui.messageBox('Insert this spacer through the library as a linked part at its saved length. '
+                      'Prepare a separate Part design for a custom length.')
+        return
 
      # General logging for debug.
     futil.log(f'{CMD_NAME} Command Preview Event')
@@ -408,4 +415,3 @@ def determine_extrude_flip( start: adsk.core.Base, end: adsk.core.Base) -> bool:
     stoend_z_dot = start_normal.dotProduct(start_to_end_normal)
 
     return stoend_z_dot < 0
-
