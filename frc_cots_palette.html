@@ -8,7 +8,7 @@
 <html>
 <head>
   <meta charset="utf-8" />
-  <title>BCHS FRC 2386 COTS Library</title>
+  <title>FRC COTS Library</title>
   <style>
     :root {
       /* Dark theme defaults */
@@ -21,9 +21,9 @@
       --fg-main: #f4f6ff;
       --fg-muted: #a4a9c0;
       --fg-subtle: #6f7486;
-      --accent: #e5b845;
-      --accent-soft: #3c3420;
-      --accent-strong: #d2a42e;
+      --accent: #3b82ff;
+      --accent-soft: #27334d;
+      --accent-strong: #2563eb;
       --border-subtle: #292d3b;
       --shadow-elevated: 0 8px 18px rgba(0, 0, 0, 0.55);
       --input-bg: #151926;
@@ -41,9 +41,9 @@
       --fg-main: #12141f;
       --fg-muted: #5c6075;
       --fg-subtle: #8a8ea4;
-      --accent: #805b00;
-      --accent-soft: #f7edcd;
-      --accent-strong: #684900;
+      --accent: #2563eb;
+      --accent-soft: #d3e2ff;
+      --accent-strong: #1d4ed8;
       --border-subtle: #c5c9dd;
       --shadow-elevated: 0 6px 14px rgba(15, 23, 42, 0.18);
       --input-bg: #ffffff;
@@ -102,14 +102,6 @@
       font-size: 11px;
       color: var(--fg-subtle);
     }
-
-    #titleBlock { position: relative; padding-left: 46px; min-width: 0; }
-    #teamBadge { position: absolute; left: 0; top: 2px; width: 38px; height: 38px; }
-    #teamName { margin: 0; color: var(--accent); font-size: 10px; font-weight: 700; letter-spacing: .12em; }
-    h2 span { color: var(--fg-muted); font-weight: 400; }
-    #subtitle { color: var(--fg-muted); line-height: 1.45; }
-    #teamCredit { margin: 0; font-size: 10px; color: var(--fg-muted); line-height: 1.4; }
-    #themeToggle { flex-shrink: 0; }
 
     /* Theme toggle pill */
     #themeToggle {
@@ -386,11 +378,9 @@
   <div id="appCard">
     <div id="headerRow">
       <div id="titleBlock">
-        <img id="teamBadge" src="resources/team_2386_badge.svg" alt="BCHS FRC Team 2386" />
-        <p id="teamName">BCHS ROBOTICS</p>
-        <h2>FRC 2386 <span>COTS</span></h2>
+        <h2>FRC COTS</h2>
         <p id="subtitle">
-          Team 2386 parts library. Select a face, edge, or joint origin, then choose a part.
+          Click a part to insert it at the selected faces, edges, or joint origins in your design.
         </p>
       </div>
       <button id="themeToggle" type="button" data-theme="dark">
@@ -419,8 +409,7 @@
       </div>
     </div>
 
-    <p id="teamCredit">BCHS FRC Team 2386 edition<br />Based on FRC COTS by Logan de Laar / Team 5000</p>
-    <div id="statusRow">
+    <div id="headerRow">
       <div id="statusLine">
         Idle.
       </div>

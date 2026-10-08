@@ -10,7 +10,7 @@ ui = app.userInterface
 
 
 # TODO *** Specify the command identity information. ***
-CMD_NAME = 'BCHS 2386 Insert Spacer'
+CMD_NAME = 'FRC_COTS Insert Spacer'
 CMD_Description = 'Insert a dynamic spacer'
 
 # Specify that the command will be promoted to the panel.

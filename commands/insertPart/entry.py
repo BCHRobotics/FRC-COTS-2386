@@ -9,7 +9,7 @@ ui = app.userInterface
 
 # TODO *** Specify the command identity information. ***
 # CMD_ID = f'{config.COMPANY_NAME}_{config.ADDIN_NAME}_insertPart'
-CMD_NAME = 'BCHS 2386 Insert Part'
+CMD_NAME = 'FRC_COTS Insert Part'
 CMD_Description = 'Insert a COTS part'
 
 # Specify that the command will be promoted to the panel.

@@ -135,7 +135,7 @@ def create_palette() -> adsk.core.Palette:
     if g_palette and g_palette.isValid:
         return g_palette
 
-    pal_id = config.palette_id
+    pal_id = 'FRC_COTS_Palette'
     pal: adsk.core.Palette = ui.palettes.itemById(pal_id)
     if pal and not pal.isValid:
         # Stale palette, remove so we can recreate
@@ -147,7 +147,7 @@ def create_palette() -> adsk.core.Palette:
         url = 'file:///' + html_path.replace('\\', '/')
         pal = ui.palettes.add(
             pal_id,
-            config.DISPLAY_NAME,
+            'FRC COTS Library',
             url,
             True,   # isVisible
             True,   # showCloseButton
@@ -360,13 +360,13 @@ def run(context):
         if not _ensure_file_paths_exist():
             raise Exception("Database directory creation failed.") 
 
-        cmd_id = config.LIBRARY_CMD_ID
+        cmd_id = 'FRC_InsertCOTS'
         cmd_def = ui.commandDefinitions.itemById(cmd_id)
         if not cmd_def:
             cmd_def = ui.commandDefinitions.addButtonDefinition(
                 cmd_id,
-                config.DISPLAY_NAME,
-                'Open the BCHS FRC Team 2386 parts library to insert components',
+                'FRC COTS Library',
+                'Open the FRC COTS library palette to insert components',
                 ICON_FOLDER
             )
 
@@ -416,7 +416,7 @@ def stop(context):
     commands.stop()
 
     try:
-        cmd_id = config.LIBRARY_CMD_ID
+        cmd_id = 'FRC_InsertCOTS'
 
         # Stop the database thread
         if g_dbThread:
@@ -443,7 +443,7 @@ def stop(context):
             g_palette.deleteMe()
             g_palette = None
         else:
-            pal = ui.palettes.itemById(config.palette_id)
+            pal = ui.palettes.itemById('FRC_COTS_Palette')
             if pal:
                 pal.deleteMe()
 

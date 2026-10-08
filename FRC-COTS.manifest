@@ -1,13 +1,13 @@
 {
-  "autodeskProduct": "Fusion360",
-  "type": "addin",
-  "author": "BCHS FRC Team 2386; based on Logan de Laar / FRC Team 5000",
-  "description": {
-    "": "BCHS FRC Team 2386 edition of the FRC COTS parts library for Autodesk Fusion"
-  },
-  "version": "1.3.0-2386.1",
-  "runOnStartup": false,
-  "supportedOS": "windows|mac",
-  "editEnabled": true,
-  "iconFilename": "team_2386_badge.png"
+	"autodeskProduct": "Fusion360",
+	"type": "addin",
+	"author": "Logan deLaar - Team 5000",
+	"description": {
+	"": "FRC COTS library browser"
+	},
+	"version": "1.3.0",
+	"runOnStartup": false,
+	"supportedOS": "windows|mac",
+	"editEnabled": true,
+	"iconFilename": "team_5000_logo.png"
 }

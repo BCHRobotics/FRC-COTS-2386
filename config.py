@@ -23,11 +23,7 @@ DEFAULT_TO_LINKED_PARTS = False
 # # that need a unique name. It's also recommended to use a company name as 
 # # part of the ID to better ensure the ID is unique.
 ADDIN_NAME = 'FRC_COTS'
-COMPANY_NAME = 'BCHS_TEAM_2386'
-
-# BCHS FRC Team 2386 edition branding.
-DISPLAY_NAME = 'BCHS 2386 COTS Library'
-LIBRARY_CMD_ID = f'{COMPANY_NAME}_{ADDIN_NAME}_library'
+COMPANY_NAME = 'TEAM_5000'
 
 # Command IDS
 INSERT_PART_CMD_ID = f'{COMPANY_NAME}_{ADDIN_NAME}_insertPart'
