@@ -16,11 +16,11 @@ A BCHS robotics edition of the FRC COTS add-in for Autodesk Fusion. Browse comme
 
 1. Install and sign in to a school-approved Autodesk Fusion installation.
 2. Obtain a copy of this edition. Extract or copy the complete project to a permanent folder named **`FRC-COTS`**. A repository download may use a different folder name; rename the installation copy.
-3. Keep `FRC-COTS.py`, `FRC-COTS.manifest`, `config.py`, `database_thread.py`, `frc_cots_palette.html`, `team_2386_badge.png`, `commands/`, `lib/`, and `resources/` together. `spacers/` contains optional example designs.
+3. Keep `FRC-COTS.py`, `FRC-COTS.manifest`, `config.py`, `database_thread.py`, `frc_cots_palette.html`, `team_5000_logo.png`, `commands/`, `lib/`, and `resources/` together. `spacers/` contains optional example designs.
 4. In Fusion, open **Utilities → Add-Ins → Scripts and Add-Ins**. On the **Add-Ins** tab, use **+** to select the `FRC-COTS` folder, then select the add-in and click **Run**. Fusion's labels can vary by release.
 5. Leave **Run on Startup** off during initial testing; it is off in the manifest.
 6. In the current Fusion hub, create or obtain access to a cloud project named **`FRC_COTS`**, with `.f3d` parts in its folders. If there are duplicate project names, the first matching accessible project is used.
-7. Open a test design. In the Design workspace's Insert panel, select **BCHS 2386 COTS Library**.
+7. Open a test design. In the Design workspace's Insert panel, select **FRC COTS Library**.
 
 The add-in uses Python and `adsk` modules provided by Fusion. No separate Python installation, pip packages, database server, API key, or background service is required.
 
@@ -42,7 +42,7 @@ FRC_COTS/
 
 Select a supported face, edge, or joint origin, then choose a part. Review placement, flip, offsets, and other command options before accepting. Regular parts default to unlinked copies (`DEFAULT_TO_LINKED_PARTS = False`); linking is available in the part command. Spacers are inserted as unlinked components so their geometry can be resized. Save the design through Fusion after checking it.
 
-For a dynamic spacer, create a short spacer or shaft with planar end faces and a joint origin at one end, pointing outward. Use **BCHS 2386 Make Spacer** in Utilities to set the spacer attribute. Hide construction origins and save the library design. The bundled `spacers/` files are examples to upload manually if needed.
+For a dynamic spacer, create a short spacer or shaft with planar end faces and a joint origin at one end, pointing outward. Use **FRC_COTS Make Spacer** in Utilities to set the spacer attribute. Hide construction origins and save the library design. The bundled `spacers/` files are examples to upload manually if needed.
 
 ## Local data and student use
 
@@ -54,7 +54,7 @@ The default cache is **`~/FRC-COTS_db`** (`%USERPROFILE%\FRC-COTS_db` on Windows
 
 The palette stores its theme in Fusion's embedded browser local storage under `frcCotsTheme`. Cache files are ordinary, unencrypted JSON and PNG files. Stopping or uninstalling the add-in does not remove them. A cache older than 14 days triggers an index rebuild and thumbnail deletion; this is not a comprehensive retention policy.
 
-Read the [school IT deployment and support guide](docs/INSTALLATION_AND_STUDENT_SAFETY.md) before classroom deployment. It explains installation concerns, managed-device deployment, troubleshooting, actual access, network use, student-data safeguards, pilot checks, support ownership, and rollback. An editable Word copy is in the same folder.
+Read the [school IT deployment and support guide](INSTALLATION_AND_STUDENT_SAFETY.md) before classroom deployment. It covers installation requirements, administrator access, network considerations, and potential student-information exposure. The guide is supplied in Markdown format.
 
 ## Credits and license
 

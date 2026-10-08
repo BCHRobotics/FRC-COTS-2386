@@ -1,6 +1,6 @@
 # BCHS FRC Team 2386 COTS Library School IT Deployment and Support Guide
 
-BCHS robotics • Version 1.3.0-2386.1 • October 7, 2026
+BCHS robotics • Version 1.3.0-2386.2 • October 8, 2026
 
 ## Purpose and assessment
 
@@ -50,10 +50,10 @@ Use a school-approved Autodesk Fusion installation on Windows or macOS and an Au
 
 1. Obtain the complete reviewed Team 2386 edition from the team's approved distribution location. 
 2. Extract or copy it to a permanent folder named FRC-COTS. The folder name must match FRC-COTS.py and FRC-COTS.manifest. Do not select the repository's parent folder or leave a nested FRC-COTS folder inside the installation.
-3. Keep these files together: FRC-COTS.py, FRC-COTS.manifest, config.py, database_thread.py, frc_cots_palette.html, team_2386_badge.png, and the commands, lib, and resources folders. The spacers folder contains optional example models. README and LICENSE should accompany the distribution.
+3. Keep these files together: FRC-COTS.py, FRC-COTS.manifest, config.py, database_thread.py, frc_cots_palette.html, team_5000_logo.png, and the commands, lib, and resources folders. The spacers folder contains optional example models. README and LICENSE should accompany the distribution.
 4. Open Fusion, then Utilities > Add-Ins > Scripts and Add-Ins. Select the Add-Ins tab, use the plus button to select the FRC-COTS folder, select the add-in, and click Run. UI labels may vary by release. Leave Run on Startup off initially; the manifest defaults to false.
 5. In the current Fusion hub, create or obtain access to a project named FRC_COTS. Populate it with approved .f3d parts. Subfolders become library categories. Avoid duplicate project names: selection uses the first match, not an explicitly configured project ID.
-6. Open a disposable design and choose BCHS 2386 COTS Library from the Design workspace's Insert panel. Confirm library loading, folder browsing, search, favorites, thumbnails, insertion, joints, and spacer behavior. Restart Fusion to check persisted settings.
+6. Open a disposable design and choose FRC COTS Library from the Design workspace's Insert panel. Confirm library loading, folder browsing, search, favorites, thumbnails, insertion, joints, and spacer behavior. Restart Fusion to check persisted settings.
 
 ### Configuration and updates
 
